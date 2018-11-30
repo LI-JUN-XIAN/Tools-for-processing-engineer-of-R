@@ -1,7 +1,28 @@
 
+#
+# PE Tools, Grouping Lable tools
+#
+
+group_split_bylevel <- function(Data,Level,sep="-",...){ #just numeric
+  
+  NLevel <- length(Level)
+  Label <- paste0(Level[1:(NLevel-1)],sep,Level[2:NLevel])
+  Label <- c(paste0("<=",Level[1]),Label,paste0(">",Level[NLevel]))
+  Level <- c(-Inf,Level[order(Level)],Inf)
+  
+  return(
+    result = cut(x=Data,breaks=Level,labels=Label,...)
+    )
+
+}
+
+#GroupingLable(iris$Petal.Length,c(1,2,3,4),"~")
+
+#################################################
+
 #group_split_byseq(AA,"L")
 
-group_split_byseq <- function(DF,Group){
+group_split_byseq <- function(DF,Group){ #numeric and character is ok
 
 	DF$SEQ_O <- 1:length(DF[,Group])
 	InfoMissing <- sum(is.na(DF[,Group]))
